@@ -8,16 +8,16 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 app.post('/chat', async (req, res) => {
     try {
         const { message } = req.body;
-        const model = genAI.getGenerativeModel({ 
-            model: "gemini-pro",
-            systemInstruction: "You are the Henry Global Tech (HGT) Intelligence AI. Be professional and technical."
-        });
+        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
         const result = await model.generateContent(message);
         const response = await result.response;
-        res.json({ reply: response.text(), brand: "HGT Industry" });
+        res.json({ reply: response.text() });
     } catch (e) {
-        res.status(500).json({ reply: "HGT Core is recalibrating." });
+        res.status(500).json({ error: "HGT Recalibrating" });
     }
 });
 
-app.listen(process.env.PORT || 3000, () => console.log("HGT CORE ACTIVE"));
+app.get('/', (req, res) => res.send("HGT Core is Online"));
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log("HGT LIVE"));
